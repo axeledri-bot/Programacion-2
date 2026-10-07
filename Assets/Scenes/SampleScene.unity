@@ -811,6 +811,11 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
+  currentWeapon: {fileID: 11400000, guid: 0eea22d6f81f9814c81fdea76a7b533c, type: 2}
+  primaryWeapon: {fileID: 11400000, guid: 0ca475a4d07fa654191d370ba593a504, type: 2}
+  secondaryWeapon: {fileID: 11400000, guid: 42a1022e70c8ca643b7271c02c59d84b, type: 2}
+  shootTimer: 0
+  primaryBullet: 0
 --- !u!1 &983159039
 GameObject:
   m_ObjectHideFlags: 0
