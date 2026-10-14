@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -27,7 +28,6 @@ public class PlayerController : MonoBehaviour
             {
                 currentWeapon = primaryWeapon;
             }
-
         }
 
         if (shootTimer > 0)
@@ -55,8 +55,11 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0))
             {
-                if (shootTimer > 0) { return; }
+
+                if (!canShoot) { return; }
+
                 if (currentWeapon == primaryWeapon & primaryBullet <= 0) { return; }
+                if (currentWeapon == primaryWeapon)
                 {
                     primaryBullet -= 1;
                 }
@@ -80,15 +83,18 @@ public class PlayerController : MonoBehaviour
                         Debug.Log("Mi loco dele pafuera");
                     }
                 }
-                shootTimer = currentWeapon.shootingSpeed;
+                canShoot = false;
+                StartCoroutine(ResetAttack());
 
             }
         }
+
         else if (currentWeapon.ShootingMode == ShootingMode.Semiautomatic)
         {
             if (Input.GetMouseButtonDown(0))
             {
-                if (shootTimer > 0) { return; }
+
+                if (!canShoot) { return; }
                 if (currentWeapon == primaryWeapon & primaryBullet <= 0) { return; }
                 {
                     primaryBullet -= 1;
@@ -113,11 +119,20 @@ public class PlayerController : MonoBehaviour
                         Debug.Log("Mi loco dele pafuera");
                     }
                 }
-                shootTimer = currentWeapon.shootingSpeed;
+                canShoot = false;
+                StartCoroutine(ResetAttack());
+
 
             }
         }
     }
+    private IEnumerator ResetAttack()
+    {
+        yield return new WaitForSeconds(currentWeapon.shootingSpeed);
+        canShoot = true;
+    }
+
+    public bool canShoot = true;
     private void Mouse()
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
